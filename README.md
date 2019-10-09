@@ -1,44 +1,85 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 项目介绍
 
-## Available Scripts
+配合32节内容，通过create-react-app 脚手架创建的。
 
-In the project directory, you can run:
+可以直接通过 `npm start` 启动。
 
-### `yarn start`
+### 1，工程目录介绍
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. /public 文件夹，其内容会被拷贝到，最终生成项目的根目录下。
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+可以放一些静态文件，比如图标，字体。
 
-### `yarn test`
+对静态文件的引用，需要加 public，比如 index.html 中 `<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+而图片，可以直接引用 `<link rel="apple-touch-icon" href="logo192.png" />`
 
-### `yarn build`
+2. /src 文件夹，
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`index.tsx` 是整个工程的入口文件。
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. package.json 文件
 
-### `yarn eject`
+已经预置安装了一些包，但注意到没有关于 webpack 的包。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+这是因为，webpack相关的，都集成封装在了 `react-scripts` 包中。
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+所以，类似启动脚本等一些脚本，都是通过 `react-scripts` 实现的。
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+如果对配置项不满意，想自己配置，可以运行 `npm run eject` 将webpack的隐藏配置项弹出，自己配置。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+> 之后的一部分课程的讲解，都会使用这个项目，所以这里对其进行一些改造。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2，改造后的项目
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. 基础的，和 `ts_react_manual` 项目一样。
+
+2. 新添加的依赖
+
+npm i xx --save
+```
+antd
+axios
+react-router-dom
+```
+
+开发依赖 npm i xx -D
+```
+// 可以实现 antd 的按需加载
+babel-plugin-import，
+// 可以实现create-react-app脚手架的自定义
+customize-cra,
+react-app-rewired，
+```
+上面3个，在[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)中，有提到。
+
+```
+// 可以帮助搭建mock server 
+http-server,
+http-proxy-middleware
+```
+
+
+另外，所有的脚本命名都要将，`react-scripts`  替换为 `react-app-rewired`，
+
+也是在[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)中，有提到需要配置的。
+
+
+3. antd的配置文件
+
+在根目录下，创建 config-overrides.js ，为了配合实现 antd 的按需加载。
+
+其中的配置，也是参考[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)
+
+
+4. tsconfig.json
+
+是create-react-app 创建的，不需要更改。
+
+
+---
+
+`npm start` 启动成功，配置无误。
