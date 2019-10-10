@@ -7,6 +7,7 @@ interface Greeting {
   lastName?: string,
 }
 
+// 一般方式
 // const Hello = (props: Greeting) => <Button>Hello {props.name}</Button>
 
 /* 
@@ -22,6 +23,8 @@ const Hello: React.FC<Greeting> = ({
 /* 
 如果在 Greeting 中定义的，在使用 Hello 组件时，没有传递，想使用 `defaultProps` 定义默认参数，还是会报错！
 在 Greeting 中将要设置为 `defaultProps` 的参数，设置为可选参数，才不会报错。
+
+诸多不便，还是建议使用一般的方式
 */
 Hello.defaultProps = {
   firstName: '',
