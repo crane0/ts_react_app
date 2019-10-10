@@ -19,7 +19,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
+    "eject": "react-app-rewired eject",
+    "server": "cd mock && hs -p 4000 -a locahost"
   },
   "eslintConfig": {
     "extends": "react-app"
