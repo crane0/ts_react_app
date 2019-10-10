@@ -29,15 +29,14 @@
 
 如果对配置项不满意，想自己配置，可以运行 `npm run eject` 将webpack的隐藏配置项弹出，自己配置。
 
----
 
 > 之后的一部分课程的讲解，都会使用这个项目，所以这里对其进行一些改造。
 
 ### 2，改造后的项目
 
-1. 基础的，和 `ts_react_manual` 项目一样。
+#### 2.1. 基础的，和 `ts_react_manual` 项目一样。
 
-2. 新添加的依赖
+#### 2.2. 新添加的依赖
 
 npm i xx --save
 ```
@@ -47,6 +46,8 @@ react-router-dom
 ```
 
 开发依赖 npm i xx -D
+
+下面3个，是[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)建议使用的方式。
 ```
 // 可以实现 antd 的按需加载
 babel-plugin-import，
@@ -54,32 +55,60 @@ babel-plugin-import，
 customize-cra,
 react-app-rewired，
 ```
-上面3个，在[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)中，有提到。
 
+和mock相关的。
 ```
 // 可以帮助搭建mock server 
 http-server,
 http-proxy-middleware
 ```
 
+#### 2.3. 脚本更改
 
-另外，所有的脚本命名都要将，`react-scripts`  替换为 `react-app-rewired`，
+脚本命令中，都要将`react-scripts` 替换为 `react-app-rewired`，
 
-也是在[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)中，有提到需要配置的。
+也是[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)提到需要配置的。
 
 
-3. antd的配置文件
+#### 2.4. antd的配置文件
 
 在根目录下，创建 config-overrides.js ，为了配合实现 antd 的按需加载。
 
 其中的配置，也是参考[ant-design官网](https://ant.design/docs/react/use-with-create-react-app-cn)
 
 
-4. tsconfig.json
-
-是create-react-app 创建的，不需要更改。
-
+`npm start` 启动成功，配置无误。
 
 ---
 
-`npm start` 启动成功，配置无误。
+## 第33讲，创建具有类型约束的，函数组件和类组件
+
+### 1，函数组件 
+
+`/src/components/demo/Hello.jsx`
+
+与传统的区别：
+
+需要对函数组件的属性，指定类型。
+
+2种方式，
+
+- 一般的方式
+```
+const Hello = (props: Greeting) => <Button>Hello {props.name}</Button>
+```
+
+- 使用React的声明文件中，对函数组件单独定义的一个类型：React.FC
+
+但有诸多的不变，代码中有提现。
+
+另外，React.SFC（无状态组件） React 之后可能会废弃，
+
+所以无状态组件与函数组件，最好都使用一般的方式。
+
+
+### 2，类组件
+
+`/src/components/demo/HelloClass.jsx`
+
+需要为组件的 属性和状态，都指定类型。
