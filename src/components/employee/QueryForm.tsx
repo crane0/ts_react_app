@@ -79,7 +79,7 @@ class QueryForm extends Component<{}, EmployeeRequest> {
     }
 }
 
-const WrapQueryForm = Form.create<Props>({
+const WrapQueryForm = Form.create({
     name: 'employee_query'
 })(QueryForm);
 

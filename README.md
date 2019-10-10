@@ -173,7 +173,7 @@ Button 绑定事件，用于向后端发送请求，渲染列表。
 
 ### 5，Mock组件，`mock/employee/getEmployee.json`
 
-在做前后端分离开发时，需要先将发送到后端的请求，代理到本地 mock server 上。。
+在做前后端分离开发时，需要先将发送到后端的请求，代理到本地 mock server 上。
 
 getEmployee.json 就是后端返回的数据结构。
 
@@ -181,12 +181,28 @@ getEmployee.json 就是后端返回的数据结构。
 所以将 mock 相关的，放在 public，就可以直接访问了，
 但我们不会这样做，而且webpack的配置被隐藏了，
 
-**所以，需要再启动一个以 mock 为根目录的 API server，提供 mock 服务**
+**所以，需要再启动一个以 mock 为根目录的 API server，提供 mock 服务。**
 
-在package.json中，使用的 http-server 依赖，
+在package.json中，使用了 `http-server` 依赖，
 
-并指定了一个脚本 `"server": "cd mock && hs -p 4000 -a locahost"`
+并指定了一个脚本 `"server": "cd mock && hs -p 4000 -a localhost"`
 
-（先进入了mock目录，在该目录下启动的server，服务名称 localhost）
+（脚本含义：先进入mock目录，在该目录下启动的server，服务名称 localhost）
 
 启动时，需要新开个终端 `npm run server`
+
+在页面打开 `http://localhost:4000` 就可以在页面看到 mock 文件夹下的目录。
+
+当查看 json 文件时，会发现路径是：
+```
+http://localhost:4000/employee/getEmployee.json
+```
+
+而在项目中，发送的请求肯定是和定义的 url 一致的，如下：
+```
+http://localhost:3000/api/employee/getEmployee.action?name=
+```
+
+所以需要做自定义的配置，代理更改请求的路径，以拿到数据。
+
+在该目录下：`src\setupProxy.js`下进行配置。 create-react-app，会在启动时，自动的调用该文件。
