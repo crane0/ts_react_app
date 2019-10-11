@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Select, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
-import { EmployeeRequest, EmployeeResponse } from '../../interface/employee'
-import { get } from '../../utils/request'
-import { GET_EMPLOYEE_URL } from '../../constants/urls'
+import { EmployeeRequest } from '../../interface/employee'
 
 const { Option } = Select;
 
@@ -15,7 +13,7 @@ props 就可以正常传入了。
 最下面的 Form.create 也要改造为泛型函数：Form.create<Props>
 */
 interface Props extends FormComponentProps {
-    onDataChange(data: EmployeeResponse): void
+    getData(data: EmployeeRequest): void
 }
 
 /* 
@@ -49,11 +47,11 @@ class QueryForm extends Component<Props, EmployeeRequest> {
     }
 
     queryEmployee = (param: EmployeeRequest) => {
-        // console.log(param)
-        // 请求url，定义为了常量
-        get(GET_EMPLOYEE_URL, param).then(response => {
-            this.props.onDataChange(response.data)
-        })
+        // get(GET_EMPLOYEE_URL, param).then(response => {
+        //     this.props.onDataChange(response.data)
+        // })
+
+        this.props.getData(param)
     }
 
     render() {
