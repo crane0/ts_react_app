@@ -240,3 +240,8 @@ http://localhost:3000/api/employee/getEmployee.action?name=
 在路由的切换过程中，菜单的初始状态，要根据当前路由的路径 hash 来决定的，
 
 路径 hash 会通过参数传入，去掉 `/` 进行匹配。
+
+
+## 第37讲，redux改造
+
+就是 [redux-version 分支](https://github.com/crane0/ts_react_app/tree/redux-version)
