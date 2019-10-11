@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import { Form, Input, Select, Button } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 
-import { EmployeeRequest } from '../../interface/employee'
+import { EmployeeRequest, EmployeeResponse } from '../../interface/employee'
 import { get } from '../../utils/request'
 import { GET_EMPLOYEE_URL } from '../../constants/urls'
 
 const { Option } = Select;
 
 /* 
+通过 antd 提供的FormComponentProps，来约束当前组件（已经被antd改装过的）传入的 props，
+props 就可以正常传入了。
+
+最下面的 Form.create 也要改造为泛型函数：Form.create<Props>
+*/
+interface Props extends FormComponentProps {
+    onDataChange(data: EmployeeResponse): void
+}
+
+/* 
 Component 设置泛型变量，第1个属性类型，第2个状态类型。
 */
-class QueryForm extends Component<{}, EmployeeRequest> {
+class QueryForm extends Component<Props, EmployeeRequest> {
     state: EmployeeRequest = {
         name: '',
         departmentId: undefined
@@ -38,12 +49,12 @@ class QueryForm extends Component<{}, EmployeeRequest> {
     }
 
     queryEmployee = (param: EmployeeRequest) => {
-        console.log(param)
+        // console.log(param)
         // 请求url，定义为了常量
-        get(GET_EMPLOYEE_URL, param).then(response => {})
+        get(GET_EMPLOYEE_URL, param).then(response => {
+            this.props.onDataChange(response.data)
+        })
     }
-
-    
 
     render() {
         return (
@@ -79,7 +90,8 @@ class QueryForm extends Component<{}, EmployeeRequest> {
     }
 }
 
-const WrapQueryForm = Form.create({
+// 这里也要改造为泛型函数
+const WrapQueryForm = Form.create<Props>({
     name: 'employee_query'
 })(QueryForm);
 

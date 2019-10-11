@@ -189,11 +189,18 @@ getEmployee.json 就是后端返回的数据结构。
 
 （脚本含义：先进入mock目录，在该目录下启动的server，服务名称 localhost）
 
-启动时，需要新开个终端 `npm run server`
+**启动时，需要新开个终端** `npm run server`
 
 在页面打开 `http://localhost:4000` 就可以在页面看到 mock 文件夹下的目录。
 
-当查看 json 文件时，会发现路径是：
+> 题外话，
+在mac系统下，是可以正确访问到目录列表的，在windows10下，无法访问。
+感觉区别是，一个访问的是目录列表，一个访问的是 index.html。
+另外测试发现，
+通过使用 php 的命令启动本地服务，php -S 0.0.0.0:8081，访问的是当前目录下的 index.html
+而使用 python 的命令启动本地服务，python -m SimpleHTTPServer 8082，访问的就是当前目录列表。
+
+当查看目录下的 json 文件时，会发现路径是：
 ```
 http://localhost:4000/employee/getEmployee.json
 ```
@@ -206,3 +213,30 @@ http://localhost:3000/api/employee/getEmployee.action?name=
 所以需要做自定义的配置，代理更改请求的路径，以拿到数据。
 
 在该目录下：`src\setupProxy.js`下进行配置。 create-react-app，会在启动时，自动的调用该文件。
+
+---
+
+## 第36讲，列表渲染和路由
+
+### 1，员工管理主页面组件，`src/components/employee/index.tsx`
+
+1. 兄弟组件间，数据的传递，
+2. 使用接口的好处，
+3. 边界情况的解决办法 --> 类型保护。注意，typeof 返回的都是字符串！
+4. 如何为 antd 改造过的组件传递 props
+
+以上，员工管理主页面的功能已完成。
+
+### 2，路由的设置，`src/routers/index.tsx`
+
+将整个页面，都定义为了路由，
+
+1. 改造 `src/index.tsx`，不再渲染 App，而是 Router。
+
+2. 改造 `src/components/App.tsx`，
+
+除了菜单选项之外，还有菜单的默认值，
+
+在路由的切换过程中，菜单的初始状态，要根据当前路由的路径 hash 来决定的，
+
+路径 hash 会通过参数传入，去掉 `/` 进行匹配。

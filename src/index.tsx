@@ -5,12 +5,13 @@ import ReactDOM from 'react-dom'
 // import HelloClass from './components/demo/HelloClass'
 // import HelloHOC from './components/demo/HelloHOC'
 // import HelloHooks from './components/demo/HelloHooks'
-import App from './components/App'
-
+// import App from './components/App'
+import Router from './routers/index'
 
 
 ReactDOM.render(
   // <HelloHooks name="HOC-typescript" />,
-  <App />,
+  // <App />,
+  <Router />,
   document.querySelector('.app')
 ) 
