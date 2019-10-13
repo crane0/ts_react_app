@@ -13,7 +13,8 @@ props 就可以正常传入了。
 最下面的 Form.create 也要改造为泛型函数：Form.create<Props>
 */
 interface Props extends FormComponentProps {
-    getData(data: EmployeeRequest): void
+    getData(param: EmployeeRequest, callback: () => void): void;
+    setLoading(loading: boolean): void;
 }
 
 /* 
@@ -21,21 +22,29 @@ Component 设置泛型变量，第1个属性类型，第2个状态类型。
 */
 class QueryForm extends Component<Props, EmployeeRequest> {
     state: EmployeeRequest = {
-        name: '',
+        name: undefined,
         departmentId: undefined
     }
 
     // 需要指定参数类型
     handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+        let name = e.currentTarget.value;
         this.setState({
-            name: e.currentTarget.value
-        })
+            name: name === '' ? undefined : name.trim()
+        });
     }
 
     handleDepartmentChange = (value: number) => {
         this.setState({
             departmentId: value
         })
+    }
+
+    handleReset = () => {
+        this.setState({
+            name: undefined,
+            departmentId: undefined
+        });
     }
 
     handleSubmit = () => {
@@ -51,7 +60,15 @@ class QueryForm extends Component<Props, EmployeeRequest> {
         //     this.props.onDataChange(response.data)
         // })
 
-        this.props.getData(param)
+        // 改造为 redux 后
+        // this.props.getData(param, () => {
+
+        // })
+
+        this.props.setLoading(true);
+        this.props.getData(param, () => {
+            this.props.setLoading(false);
+        });
     }
 
     render() {
@@ -81,7 +98,7 @@ class QueryForm extends Component<Props, EmployeeRequest> {
                 </Select>
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" onClick={this.handleSubmit}>查询</Button>
+                    <Button type="primary" icon="search" onClick={this.handleSubmit}>查询</Button>
                 </Form.Item>
             </Form>
         )
