@@ -20,6 +20,9 @@ import {
 
 import {
     getEmployee,
+    createEmployee,
+    deleteEmployee,
+    updateEmployee
 } from '../../redux/employee';
 
 import './index.css';
@@ -125,6 +128,9 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     onGetEmployee: getEmployee,
+    onCreateEmployee: createEmployee,
+    onDeleteEmployee: deleteEmployee,
+    onUpdateEmployee: updateEmployee
 }, dispatch);
 
 export default connect(

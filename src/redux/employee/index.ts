@@ -59,6 +59,7 @@ export function getEmployee(param: EmployeeRequest, callback: () => void) {
 }
 
 export function createEmployee(param: CreateRequest, callback: () => void) {
+    console.log(param)
     return (dispatch: Dispatch) => {
         post(CREATE_EMPLOYEE_URL, param).then(res => {
             dispatch({
@@ -112,6 +113,7 @@ export default function(state = initialState, action: Action) {
                 employeeList: action.payload
             }
         case CREATE_EMPLOYEE:
+            console.log(1111)
             let newList = [action.payload, ...(state.employeeList as EmployeeInfo[])]
             return {
                 ...state,
